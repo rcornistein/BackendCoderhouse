@@ -1,0 +1,72 @@
+[
+	{
+		"id": 1,
+		"title": "hola mundo",
+		"description": "descp",
+		"price": 12,
+		"thumbnail": [
+			"/holamundo",
+			"/holamundo2"
+		],
+		"code": "15",
+		"stock": 45,
+		"status": true,
+		"category": "book"
+	},
+	{
+		"id": 2,
+		"title": "hola mundo",
+		"description": "descp",
+		"price": 12,
+		"thumbnail": [
+			"/holamundo",
+			"/holamundo2"
+		],
+		"code": "1",
+		"stock": 45,
+		"status": true,
+		"category": "book"
+	},
+	{
+		"id": 3,
+		"title": "hola mundo",
+		"description": "descp",
+		"price": 12,
+		"thumbnail": [
+			"/holamundo",
+			"/holamundo2"
+		],
+		"code": "2",
+		"stock": 45,
+		"status": true,
+		"category": "book"
+	},
+	{
+		"id": 4,
+		"title": "hola mundo",
+		"description": "descp",
+		"price": 12,
+		"thumbnail": [
+			"/holamundo",
+			"/holamundo2"
+		],
+		"code": "3",
+		"stock": 45,
+		"status": true,
+		"category": "book"
+	},
+	{
+		"id": 5,
+		"title": "hola mundo",
+		"description": "descp",
+		"price": 12,
+		"thumbnail": [
+			"/holamundo",
+			"/holamundo2"
+		],
+		"code": "4",
+		"stock": 45,
+		"status": true,
+		"category": "book"
+	}
+]
