@@ -18,7 +18,7 @@ productsRouter.get("/",async (req,res)=>  {
     }
     else{
         const prod= await products.getProducts();
-        response.json(prod);
+        res.json(prod);
     }
     
   } catch (error) {
@@ -41,7 +41,7 @@ productsRouter.get("/:pid",async (req,res)=>  {
    try {
 
        if(prod===`Product ${id} not found`){
-      response.status(prod.status).send({message: `Product ${id} not found`});
+      res.status(prod.status).send({message: `Product ${id} not found`});
   
      }
       else{
