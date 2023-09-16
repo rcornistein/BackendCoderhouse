@@ -12,7 +12,7 @@ cartsRouter.get("/",async (req,res)=>  {
     try {
       
         const carts= await carts.getCarts();
-        response.send(carts);
+        res.send(carts);
       
     } catch (error) {
         res.status(error.status || 500).send({
@@ -36,11 +36,11 @@ cartsRouter.get("/",async (req,res)=>  {
    try {
 
        if(cart===`Shopping cart ${id} not found`){
-        response.status(cart.status).send({message: cart.message});
+        res.status(cart.status).send({message: cart.message});
   
      }
       else{
-        response.json(cart);
+        res.json(cart);
       }
     
    } catch (error) {
