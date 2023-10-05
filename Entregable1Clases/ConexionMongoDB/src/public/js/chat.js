@@ -28,13 +28,31 @@ Swal.fire({
     socketClient.emit("authenticated", user);
 });
 
+//cliente recibe el historial de mensajes
+socketClient.on("messages", (historyData)=>{
+  console.log(historyData);
 
+  historyData.forEach(element => {
+
+    let msgElements="";
+    msgElements=printMessage(element.user,element.timestamp, element.message);
+
+    let div= document.createElement("div");
+  
+    div.innerHTML=msgElements;
+   chatPanel.appendChild(div );
+      
+  });
+  
+
+
+});
 
 sendMsg.addEventListener("click",()=>{
     console.log('entro');
     //scrollDown();
     let now = new Date().toLocaleString().replace(",","").replace(/:.. /," ");
-    const msg = {timestamp:now, user:user, message:inputMsg.value};
+    const msg = { user:user, message:inputMsg.value,timestamp:now};
     socketClient.emit("msgChat", msg);
     inputMsg.value="";
 });

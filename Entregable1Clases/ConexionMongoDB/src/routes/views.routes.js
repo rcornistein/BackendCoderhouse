@@ -117,12 +117,31 @@ viewsRouter.get("/updateProduct/:productId", async (req,res)=>{
           });
         
     }
+});      
+
+
+viewsRouter.get("/productos",  async (req,res)=>{
+
+    try {
+        const currentProducts = await productsService.getProducts();       
+
+        const data={
+            products: currentProducts,
+            style: "update.css"
+           
+        }
+        res.render("products",data);
+
+      
+    } catch (error) {
         
-  
+    }
+
 
         
-   
+
     
+       
 
 });
 

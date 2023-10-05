@@ -17,9 +17,10 @@ import mongoose from "mongoose";
 import { mongoConnect } from "./config/db.js";
 import { chatService } from "./dao/index.js";
 
-//import { ProductManagerMongo } from "./dao/mongo/productManagerMongo.js";
-//import { CartManagerMongo } from "./dao/mongo/cartManagerMongo.js";
-//import { ChatManagerMongo } from "./dao/mongo/chatManagerMongo.js";
+/* para popular la base de productos */
+import { productsService } from "./dao/index.js";
+
+import { ProductMocker } from "./RandomGenerator/randomProduct.js";
 
 
 //import { error } from "console";
@@ -75,17 +76,15 @@ socketServer.on("connection",async (socket)=>{
     try {
 
         console.log("cliente conectado", socket.id);
-        //recibir mgs del cliente
-        //socket.emit("chatHistory", chat);
+        let history = await chatService.getChats(); 
+        socket.emit("messages", history);
+
 
     //recibimos el mensaje de cada usuario
       socket.on("msgChat", async (data)=>{
         //chat.push(data);
        
-
-               
-     
-        let result = await chatService.createChat(data.timestamp,data.user,data.message); 
+        let result = await chatService.createChat(data.user,data.message,data.timestamp); 
         //ChatManagerMongo.createChat(data.user,data.message);
         socket.broadcast.emit("chatHistory", data);
         socket.emit("chatHistory", data);
@@ -111,6 +110,21 @@ app.use('/products',productsRouter);
 app.use('/carts',cartsRouter);
 app.use(viewsRouter);
 
+/*
+let productos= new ProductMocker(100);
 
+const colectionProduct=productos.generateRandomProducts();
+
+const popColection = async() =>{
+for (let i = 0; i < productos.amount; i++) {
+  let result=await productsService.createProduct(colectionProduct[i]);
+   console.log(i,colectionProduct[i]);
+  }
+
+}
+
+popColection();
+
+*/
 
 

@@ -5,10 +5,6 @@ const userCollection='chats';
 
 const userSchema=new mongoose.Schema({
 
-    timestamp: {
-        type: Date,
-        default: Date.now
-    },
     user: {
 
         type: String,
@@ -17,6 +13,11 @@ const userSchema=new mongoose.Schema({
     message:{
         type: String,
         require: true
+    },
+    
+    timestamp: {
+        type: Date,
+        default: Date.now
     }
     
 
