@@ -16,7 +16,8 @@ let page=(document.getElementById('pag_Page').textContent);
 
 
 
-let selLimit=10;
+
+
 limit.addEventListener('change',()=>{
      selLimit = limit.value;
     
@@ -88,6 +89,11 @@ category.value=categoryUrl;
 }
 
 
+
+
+
+
+
 let orderUrl=url_string.split('/')[6].split('?')[0];
 
 order.value=orderUrl;
@@ -98,6 +104,13 @@ stock.addEventListener('change',()=>{
      selStock = stock.value;
     
 });
+
+let getLimit = url_string.split('/')[4].split('?')[0];
+
+if(getLimit){
+     limit.value=getLimit;
+     }
+
 
 search.addEventListener('click',()=>{
      limit = document.getElementById('limit');
