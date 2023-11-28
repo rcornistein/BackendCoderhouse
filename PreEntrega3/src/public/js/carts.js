@@ -10,14 +10,16 @@ const getTotal = ()=>{
     let totalCart=[];
     let totalItems=[];
 
+   
     for(let i=0;i<quantity.length;i++){
  
 
         for(let j=0;j<price.length;j++){
             
         if(price[j].id.split('_')[1]===quantity[i].id.split('_')[1]){
-            totalCart.push(parseInt(quantity[i].value)*parseFloat(price[j].textContent.replace('$','')))
-            totalItems.push(parseInt(quantity[i].value));
+            totalCart.push(parseInt(quantity[i].textContent)*parseFloat(price[j].textContent.replace('$','')))
+            totalItems.push(parseInt(quantity[i].textContent));
+        
         }
        
        }

@@ -26,18 +26,12 @@
                              
                             </div>
                             <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                <button  class="btn btn-link px-2"
-                                    onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                  
-                                </button>
+                            
 
-                                <input id="quantity_{{this.pid.code}}" min="0" name="quantity" value={{this.quantity}} type="number"
-                                  onclick="getTotal()" class="form-control form-control-sm quantity " />
+                                <h6 id="quantity_{{this.pid.code}}" name="quantity" 
+                                  class="form-control form-control-sm quantity "> {{this.quantity}}  </h6>
 
-                                <button class="btn btn-link px-2"
-                                    onclick="this.parentNode.querySelector('input[type=number]').stepUp() ;   ">
-                                  
-                                </button>
+                             
                             </div>
                             <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                                 <h6 class="mb-0 price"  id='price_{{this.pid.code}}'>${{this.pid.price}}</h6>
@@ -52,7 +46,7 @@
 
 
                         <div class="pt-5">
-                            <h6 class="mb-0"><a href="#!" class="text-body"><i
+                            <h6 class="mb-0"><a href="http://localhost:8080/products" class="text-body"><i
                                 class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a></h6>
                         </div>
                 </div>
