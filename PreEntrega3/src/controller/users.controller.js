@@ -107,7 +107,7 @@ static postLogin = async (req,res)=>{
         const token = generateToken(userFin2);
 
             
-        res.cookie("cookieToken",token,{httpOnly:true}).cookie("cartId",userFin2.cart.toString()).redirect("/products");
+        res.cookie("cookieToken",token,{httpOnly:true}).cookie("cartId",userFin2.cart.toString()).clearCookie('products').redirect("/products");
 
     
        // res.redirect("/products");
@@ -188,7 +188,7 @@ static postLogin = async (req,res)=>{
     const token = generateToken(req.user);
 
    
-   res.cookie("cookieToken",token,{httpOnly:true}).cookie("cartId",req.user.cart.toString()).redirect("/products");
+   res.cookie("cookieToken",token,{httpOnly:true}).cookie("cartId",req.user.cart.toString()).clearCookie('products').redirect("/products");
  
 
 }
