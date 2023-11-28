@@ -103,7 +103,7 @@ static post = async (req,res) => {
             cart.products={};
             cart.products=products;
           };
-         const result = await cartsService.updateCart(cid,cart);
+         const result = await CartsService.updateCart(cid,cart);
 
         res.status(200).json(` cart ${cid} updated`);
 
@@ -222,6 +222,22 @@ static delete = async (req,res) => {
                 if(cartProduct.quantity < cartProduct.pid.stock){
                     ticketProducts.push(cartProduct);
                     amountTicket=amountTicket+(cartProduct.quantity)*(cartProduct.pid.price)
+                    cartProduct.pid.stock= cartProduct.pid.stock-cartProduct.quantity
+
+                    let updatedProduct= await ProductsService.updateProduct(cartProduct.pid._id.toString(),cartProduct.pid);
+
+                  /*
+                  
+                          const cid=req.params.cid;
+                const cart= await CartsService.getCartById(cid);
+
+     
+                  cart.products=[];
+      
+        const result= await CartsService.updateCart(cid, cart);
+                  */
+
+
                 } else {
                     rejectedProducts.push(cartProduct);
                 }
