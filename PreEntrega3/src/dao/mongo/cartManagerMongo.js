@@ -72,6 +72,7 @@ export class CartManagerMongo{
            
             const cart= await this.model.findById(cartId).lean();      
             let product= cart.products.find(prod=> prod.pid._id.toString()===productId);
+          
             if(product){
                 cart.products.find(prod=>prod.pid._id.toString()===productId).quantity +=quantity;   
             }
@@ -80,6 +81,7 @@ export class CartManagerMongo{
             }
     
             const res= await this.model.findByIdAndUpdate({"_id": cartId},cart);
+           
             return res;
 
             

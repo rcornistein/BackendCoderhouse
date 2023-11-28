@@ -1,4 +1,4 @@
-import { usersDao } from "../dao/factory.js";
+import { usersDao,cartsDao } from "../dao/factory.js";
 import { CurrentUserDTO } from "../dao/DTOs/users.dto.js";
 
 export class UsersService{
@@ -14,6 +14,17 @@ export class UsersService{
     static sendCurrentUser(req){
        
         return new CurrentUserDTO(req.user)}
+
+    static async updateCidToUser(id){
+
+        const cartId=  await cartsDao.createCart();
+       
+        const user=usersDao.updateUser(id,{cart: cartId._id.toString()});
+        return user
+        
+        
+        }
     
 
 }
+

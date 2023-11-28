@@ -19,7 +19,7 @@ export class CartsService{
         
         return cartsDao.updateCart(cartId,updateProperties);
     };
-
+    
     
     static  addProductToCart(cartId,productId,quantity=1){
         

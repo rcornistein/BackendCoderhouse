@@ -24,7 +24,7 @@ import MongoStore from "connect-mongo";
 import cookieParser from  "cookie-parser";
 import passport from "passport";
 import { ChatService } from "./service/chat.service.js";
-
+ import {isAuth,checkRole} from "./middlewares/auth.js"
 
 
 //servidor express
@@ -64,15 +64,14 @@ app.set('views', path.join(__dirname,"/views")); //=> /src/views
 //dominio publico
 app.use(express.static(path.join(__dirname,"/public")));
 
+app.use(cookieParser());
+
+app.use(passport.initialize());
 
 app.use((req, res, next) => {
   req.socketServer = socketServer;
   return next();
 });
-
-
-
-
 
 
 
@@ -110,9 +109,7 @@ socketServer.on("connection",async (socket)=>{
 });
 
 
-app.use(cookieParser());
 
-app.use(passport.initialize());
 
 //Routers
 app.use('/api/products',productsRouter);
@@ -122,9 +119,3 @@ app.use('/api/users',userRouter);
 app.get('/', function(req, res){
   res.redirect('api/users/login');
 });
-
-
-
-
-
-

@@ -27,7 +27,7 @@ const submitUpdate = async (id) =>{
 try {
   
   const url = `http://localhost:8080/products/${id}`;
-  console.log("esta es la url",url);
+  
   const fileInput = document.getElementById('file');
   var formdata = new FormData();
   const updateForm = document.getElementById("updateForm");

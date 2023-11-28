@@ -113,6 +113,10 @@ chat.addEventListener('click',()=>{
 }
 
 
+
+
+
+
 let selStock='Available'
 stock.addEventListener('change',()=>{
      selStock = stock.value;
@@ -138,6 +142,98 @@ search.addEventListener('click',()=>{
 
 })
 
+const  setCookie = (cName, cValue, expDays)=> {
+     let date = new Date();
+     date.setTime(date.getTime() + (expDays * 24 * 60 * 60 * 1000));
+     const expires = "expires=" + date.toUTCString();
+     document.cookie = cName + "=" + cValue + "; " + expires + "; path=/";
+}
+
+const getCookie = (cName) => {
+     const name = cName + "=";
+
+     const cDecoded = decodeURIComponent(document.cookie); //to be careful
+    
+    const cArr = cDecoded .split('; ');
+     let res;
+     cArr.forEach(val => {
+         if (val.indexOf(name) === 0) res = val.substring(name.length);
+     })
+     return res;
+}
 
 
+
+let badge=document.getElementById('badge');
+
+
+badge.style.display ='none'
+//badge.innerHTML
+
+if (getCookie('products')!= undefined){
+
+     badge.style.display ='inline'
+     badge.innerHTML=getCookie('products');
+  
+}
+
+let viewCart=document.getElementById('viewCart');
+
+
+viewCart.addEventListener('click',()=>{
+
+     let cid=getCookie('cartId');
+
+     let link=`http://localhost:8080/carts/${cid}`
+
+     window.location=link;
+
+
+})
+
+
+
+const addproductToCart= async(pid) =>{
+try {
+
+     let cid=getCookie('cartId');
+
+     const url = `http://localhost:8080/api/carts/${cid}/products/${pid}`;
+    
+     const requestOptions = {
+          method: 'PUT',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({
+              "quantity": 1             })
+      };
+    
+      const result = await fetch(url, requestOptions)
+      const final = await result.json();
+        const products=final.products;  
+        let totalProducts=0;
+
+        for (const prod of  products) {
+          totalProducts = totalProducts+prod.quantity;
+         
+        }
+
+          
+        let badge=document.getElementById('badge');
+          badge.style.display = "inline";
+         badge.innerHTML =totalProducts.toString();
+
+
+         setCookie ('products', totalProducts.toString(), 1);
+  
+
+        alert('Producct added!');
+
+   
+} catch (error) {
+
+     console.log(error);
+     
+}
+
+}
 

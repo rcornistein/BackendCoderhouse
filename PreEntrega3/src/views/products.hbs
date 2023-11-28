@@ -66,15 +66,45 @@
       
 
       
-			<div class="dropdown float-right" id="mini-cart" data-component-cart>
-			  <a class="btn btn-link dropdown-toggle bg-faded p-0 chevron-big" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<i class="bi bi-cart d-inline-block" style="font-size:42px"><span class="cart-items" data-total_items></span></i>&ensp; <div class="d-inline-block text-dark"><span class="small d-block text-left">Your cart</span><span class="font-weight-bold" data-total></span>
-        </div>
-			  </a>
 
 
+    <div class="dropdown float-right data-component-user" id="mini-user" >
+		<a class="btn btn-link  bg-faded p-0 chevron-big " href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				
+   
+          <DIV>
+            <div style="position: absolute;
+                    background-color: rgb(255, 30, 30);
+                    color: white;
+                    border-radius: 50%;
+                  padding: 5px 8px;
+                  font-size: 14px;
+                  top: 10px;
+                  right:158px; display:none" id='badge' >  </div>
+            <i class="bi bi-cart d-inline-block d-inline-block" style="font-size:42px">
+          
+              
+            
+            </i> 
+        </DIV>
+				
+				<div class="d-inline-block text-dark" data-if="login">
+        
+					{{!-- <span class="font-weight-bold">View cart  </span> --}}
+           
+				</div>
+		
+			 
 
-			</div>
+
+   </a>
+			  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          
+				<a  id="viewCart" class="dropdown-item" href="#">Check out</a>
+		
+			  </div>
+
+
 			
 			<div class="dropdown float-right" id="mini-user" data-component-user>
 			  <a class="btn btn-link dropdown-toggle bg-faded p-0 chevron-big" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -113,7 +143,7 @@
 			<section class="row" style="height: 82vh">
 
 				<section class="col-12 overflow-auto"   >
-        <div id="welcome"> <h3>Welcome {{user}}!! Your rol is {{rol}} </h3></div>
+        <div id="welcome"> <h3>Welcome {{user}}!! Your rol is {{rol}}  </h3></div>
 
             <div id="menu_paginator">
 
@@ -200,7 +230,7 @@
               </div>
             <div class="container" >
                         <div id="lista" class="row p-1">
-                        
+                       {{#if IsUser}} 
                          {{#each products}}
 
                             <div class="col-3" id="{{this.category}}">
@@ -208,20 +238,51 @@
                          
                                     <img src= {{this.thumbnail}} class="h-75 card-img-top" alt="...">
                                     <div class="card-body">
-                                        <h6 class="card-subtitle">{{this.category}}</h6>
+                                        <h6 class="card-subtitle">{{this.category}}  </h6>
                                         <h5 class="card-title">{{this.title}}</h5>
                                       
                                       
-                                        <h6 class="card-subtitle">${{this.price}}</h6>
+                                        <h6 class="card-subtitle">${{this.price}}  </h6>
                                       
                                         <p class="card-text ">{{this.description}}</p>
-                                        <a href="#" class="btn btn-primary" onclick="">Add</a>
+									
+                                        <a  id={{ this._id}} href="#" class="btn btn-primary" onclick="addproductToCart('{{ this._id}}')">Add</a>
+								
+
+                                        <p class="card-text stock">{{this.available}} </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                       {{/each}}
+						{{/if}}
+
+						 {{#if IsAdmin}} 
+                         {{#each products}}
+
+                            <div class="col-3" id="{{this.category}}">
+                                <div class="card m-1">
+                         
+                                    <img src= {{this.thumbnail}} class="h-75 card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h6 class="card-subtitle">{{this.category}}  </h6>
+                                        <h5 class="card-title">{{this.title}}</h5>
+                                      
+                                      
+                                        <h6 class="card-subtitle">${{this.price}}  </h6>
+                                      
+                                        <p class="card-text ">{{this.description}}</p>
+									
+                                       
+								
+
                                         <p class="card-text stock">{{this.available}} </p>
                                     </div>
                                 </div>
                             </div>
 
                             {{/each}}
+						{{/if}}
                           </div>
 
             </div> 

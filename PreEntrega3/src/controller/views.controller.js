@@ -9,6 +9,7 @@ import { initializePassport } from "../config/passport.config.js";
 import { config } from "../config/config.js";
 import { generateToken, validateToken } from "../utils.js";
 import { createHash, inValidPassword } from "../utils.js";
+import { CartsService } from "../service/carts.service.js";
 
 
 export class ViewsController {
@@ -98,6 +99,7 @@ static getChat= async (req,res)=>{
             
            
             const user=req.user.first_name;
+            const cartUser= req.user.cart;
             const rol=req.user.role;
             let limit = parseInt(req.query.limit);
             if(!limit){  limit=10};
@@ -166,6 +168,7 @@ static getChat= async (req,res)=>{
     
              currentProducts.payload.forEach(element => {
                 element.available= element.stock>0?'Available':'Not available';
+                element.cart=   cartUser
               
     
              });
@@ -174,6 +177,7 @@ static getChat= async (req,res)=>{
             const data={
                     products: currentProducts.payload,
                     user:user,
+                   
                     rol:rol,
                     IsAdmin: rol==='admin',
                     IsUser: rol==='user',
@@ -204,7 +208,7 @@ static getChat= async (req,res)=>{
     try {
 
         let cid = req.params.cid;
-        const result = await cartsService.getCartById(cid);
+        const result = await CartsService.getCartById(cid);
 
     
         

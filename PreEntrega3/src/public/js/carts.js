@@ -48,7 +48,31 @@ total.textContent=`Total: $${totalsum}`;
 
 getTotal();
 
+const getCookie = (cName) => {
+    const name = cName + "=";
 
+    const cDecoded = decodeURIComponent(document.cookie); //to be careful
+   
+   const cArr = cDecoded .split('; ');
+    let res;
+    cArr.forEach(val => {
+        if (val.indexOf(name) === 0) res = val.substring(name.length);
+    })
+    return res;
+}
+
+const purchase = document.getElementById('purcharse');
+
+
+purchase.addEventListener('click',()=>{
+
+    let cid=getCookie('cartId');
+
+    let link=`http://localhost:8080/${cid}/purchase`
+
+    window.location=link;
+
+})
 
 
 

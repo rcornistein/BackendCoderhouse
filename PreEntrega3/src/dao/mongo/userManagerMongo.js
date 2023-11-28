@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import { userModel } from "../models/user.model.js";
+import { CartManagerMongo } from "./cartManagerMongo.js";
 
-
+//createCart
 export class userManagerMongo{
 
     constructor(){
@@ -33,6 +34,8 @@ export class userManagerMongo{
         try {
        
            const resultado = await this.model.find({email: object.email}).lean();
+           
+
         
            
             return resultado;
@@ -47,6 +50,23 @@ export class userManagerMongo{
 
 
     }
+
+    async updateUser(id, updateProperties){
+        try {
+            const user =await this.model.findByIdAndUpdate(id,updateProperties).lean();
+
+            if(!user){
+                throw new Error('Could not update user ');
+            }
+            return user;
+            
+        } catch (error) {
+            console.log("updateUser   ",error.message);
+            throw  new Error(`Could not update user ${error.message}`);
+        }
+    }
+
+    
 
 
 

@@ -45,9 +45,20 @@ export const initializePassport = ()=>{
          
                
                 let user = await UsersService.getUserByMail({email:profile.username});
+                let userFin;
                 if(user){
                     //el usuario ya esta registrado
-                    return done(null,user);
+                
+               
+                    const userId=user[0]._id.toString();
+           
+                    userFin= await UsersService.updateCidToUser(userId);
+                   let userFin2= await UsersService.getUserByMail({email:profile.username});
+
+
+    
+                   
+                    return done(null,userFin2[0]);
                 }
                 //El usuario no esta registrado
                 const newUser = {
@@ -59,7 +70,11 @@ export const initializePassport = ()=>{
                 };
             
                  user = await UsersService.createUser(newUser);
-                return done(null,user);
+                 const userId=user._id.toString()
+           
+                userFin= await UsersService.updateCidToUser(userId);
+                 let userFin2= await UsersService.getUserByMail(newUser.email)[0];
+                return done(null,userFin2);
             } catch (error) {
                 return done(error)
             }

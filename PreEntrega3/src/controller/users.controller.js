@@ -7,6 +7,7 @@ import { config } from "../config/config.js";
 import { generateToken, validateToken } from "../utils.js";
 import { createHash, inValidPassword } from "../utils.js";
 import { CurrentUserDTO } from "../dao/DTOs/users.dto.js";
+import { compareSync } from "bcrypt";
 
 
 export class UsersController{
@@ -46,6 +47,7 @@ static postLogin = async (req,res)=>{
 
         const loginForm = req.body;
         let userFin;
+        let userFin2;
 
         //console.log(loginForm.InputEmail,config.admin.email,loginForm.InputPassword,config.admin.password)
 
@@ -72,7 +74,8 @@ static postLogin = async (req,res)=>{
                 let email={};
                
                 email.email=loginForm.InputEmail;
-                const user  = await UsersService.getUserByMail(email);
+                let user  = await UsersService.getUserByMail(email);
+
               
                
                 if(!user ){
@@ -82,18 +85,29 @@ static postLogin = async (req,res)=>{
 
                 
                  userFin=user[0];
-    
+                 
+                 const userId=userFin._id.toString()
+           
+                 userFin= await UsersService.updateCidToUser(userId);
+
+                 let emailUser={};
+               
+                 emailUser.email=loginForm.InputEmail;
+                 userFin=await UsersService.getUserByMail(emailUser);
+                  userFin2=userFin[0]
                 
+               
              
-                 if(!inValidPassword(loginForm.InputPassword,userFin)){
+                 if(!inValidPassword(loginForm.InputPassword,userFin2)){
                 return res.render("login",{ style: 'logIn.css',logError:true,error:"Some data doesn't match"});
                 }
             }
 
-   
-        const token = generateToken(userFin);
-    
-        res.cookie("cookieToken",token,{httpOnly:true}).redirect("/products");
+       
+        const token = generateToken(userFin2);
+
+            
+        res.cookie("cookieToken",token,{httpOnly:true}).cookie("cartId",userFin2.cart.toString()).redirect("/products");
 
     
        // res.redirect("/products");
@@ -158,7 +172,9 @@ static postLogin = async (req,res)=>{
         try {
             
             res.clearCookie('cookieToken');
-          
+
+            res.clearCookie('products');
+            res.clearCookie('cartId');
             res.render("login", {style:"logIn.css"});
             
         } catch (error) {
@@ -169,10 +185,10 @@ static postLogin = async (req,res)=>{
 
  static getGithub =(req,res)=>{
     
-    const token = generateToken(req.user[0]);
+    const token = generateToken(req.user);
 
    
-   res.cookie("cookieToken",token,{httpOnly:true}).redirect("/products");
+   res.cookie("cookieToken",token,{httpOnly:true}).cookie("cartId",req.user.cart.toString()).redirect("/products");
  
 
 }

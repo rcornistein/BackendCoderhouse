@@ -23,7 +23,7 @@ const productsRouter = Router();
 productsRouter.get("/" ,passport.authenticate("jwtAuth",{session:false}),isAuth, checkRole(["admin"]) ,ProductsController.getProducts)
 
 
-productsRouter.get("/:pid",passport.authenticate("jwtAuth",{session:false}),isAuth, checkRole(["admin"]),ProductsController.GetPid)
+productsRouter.get("/:pid",/*passport.authenticate("jwtAuth",{session:false}),isAuth, checkRole(["admin"]),*/ ProductsController.GetPid)
 
 
 productsRouter.post("/",uploader.single("file"),passport.authenticate("jwtAuth",{session:false}),isAuth, checkRole(["admin"]),ProductsController.postProduct);

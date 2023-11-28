@@ -1,8 +1,11 @@
 import Router from "express";
 
 import { CartsService } from "../service/carts.service.js";
+import {ProductsService} from "../service/products.service.js"
+import { TicketsService } from "../service/ticketsService.js";
 
 
+import {v4 as uuidv4} from 'uuid';
 
 export class CartsController{
 
@@ -32,7 +35,7 @@ static post = async (req,res) => {
 
         const cid=req.params.cid;
       const cart= await CartsService.getCartById(cid);
-      console.log(cart);
+
      
       cart.products=[];
       
@@ -62,9 +65,10 @@ static post = async (req,res) => {
         const quantity= parseInt(req.body.quantity)||1;
         
 
-         const result = await CartsService.addProductToCart(cid,pid,quantity);
+         let result = await CartsService.addProductToCart(cid,pid,quantity);
+         result=await CartsService.getCartById(cid);
 
-        res.status(200).json(`product ${pid} added to cart ${cid}`);
+        res.status(200).json(result);
 
 
     } catch (error) {
@@ -195,6 +199,60 @@ static delete = async (req,res) => {
       
       ;
   }
+
+
+
+  static purchaseCart = async(req,res)=>{
+    try {
+        const {cid: cid} = req.params;
+        const cart = await CartsService.getCartById(cid);
+
+
+        if(cart.products.length){
+            const ticketProducts=[];
+            const rejectedProducts=[];
+            //verificar el stock de cada producto
+            let amountTicket=0;
+            for(let i=0;i<cart.products.length;i++){
+                const cartProduct =cart.products[i];
+              
+             
+               
+                //por cada producto comparar quantity con el stock
+                if(cartProduct.quantity < cartProduct.pid.stock){
+                    ticketProducts.push(cartProduct);
+                    amountTicket=amountTicket+(cartProduct.quantity)*(cartProduct.pid.price)
+                } else {
+                    rejectedProducts.push(cartProduct);
+                }
+            };
+      ;
+
+        
+            const newTicket = {
+                code:uuidv4(),
+                purchase_datetime: new Date(),
+                amount:amountTicket,
+                purchaser:req.user.email
+            };
+            if(ticketProducts.length>0){
+             let finalTicket= await TicketsService.createTicket(newTicket);
+           
+            }
+            if(rejectedProducts.length>0){
+            res.json({status:"success", message:"Some products were sold out", rejectedProducts});
+            }
+            else{
+              res.json({status:"success", message:"Thank you for your purchase! All the products where available ",ticketProducts});
+            }
+          } 
+        else {
+            res.json({status:"error", message:"El carrito esta vacio"});
+        }
+    } catch (error) {
+        res.json({error:error.message});
+    }
+};
 
 
 }
