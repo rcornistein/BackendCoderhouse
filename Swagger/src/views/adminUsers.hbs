@@ -1,0 +1,53 @@
+<h1>Users</h1>
+
+
+<br>
+<br>
+
+<div id="product_table"> 
+
+   
+
+    <table id="table_1" class="table">
+        <thead>
+            <tr>
+            <th scope="col">Id</th>
+            <th scope="col"> Name</th>
+            <th scope="col">Email</th>
+             <th scope="col">Role</th>
+            <th scope="col">Change Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each users}}
+
+              
+                <tr>
+                    <td>  {{this._id}}</td>
+                    <td> {{this.name}} </td>
+                    <td>  {{this.email}}</td>
+                    <td>  {{this.role}}</td>
+                 
+     
+                    <td> 
+                        <select id="role_{{this._id}}" style="right-padding: 5px" "form-select">
+                        <option value=""> Please choose an option </option>
+                        <option value="user">User</option>
+                        <option value="premium">Premium</option>
+
+                    </select>  
+                  
+                    <input class="btn btn-primary" type="button" value="update" onclick="updateUser('{{ this._id}}')"> 
+                    </td>
+             
+                </tr>
+
+           
+              {{/each}}
+        </tbody>
+    </table>
+
+     
+</div>
+
+<script src="/js/adminUsers.js"></script>
