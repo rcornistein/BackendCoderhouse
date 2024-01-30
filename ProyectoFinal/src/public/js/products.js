@@ -288,7 +288,7 @@ const deleteProductToCart= async(pid) =>{
          
            const result = await fetch(url, requestOptions)
            const final = await result.json();
-      console.log(final)
+ 
         
      
           if (!final.message){
@@ -297,7 +297,7 @@ const deleteProductToCart= async(pid) =>{
              let totalProducts=0;
      
      
-          if(products.length != undefined){
+          if(products.length ){
              for (const prod of  products) {
                totalProducts = totalProducts+prod.quantity;
               

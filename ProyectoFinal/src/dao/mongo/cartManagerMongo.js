@@ -103,7 +103,7 @@ export class CartManagerMongo{
 
          if(cart){
 
-                let product= cart.products.find(prod=> prod.pid._id.toString()===productId); 
+                let product= cart.products.find(prod=> prod.pid._id.toString()==productId); 
           
 
                 if(!product ){
