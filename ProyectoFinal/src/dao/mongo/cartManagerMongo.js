@@ -111,7 +111,7 @@ export class CartManagerMongo{
 
                 }
       
-                if(product.quantity>1){
+                if(product.quantity != undefined){
 
                     for (let i = 0; i < cart.lenght; i++) {
                         str = str + i;
