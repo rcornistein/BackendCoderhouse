@@ -288,10 +288,11 @@ const deleteProductToCart= async(pid) =>{
          
            const result = await fetch(url, requestOptions)
            const final = await result.json();
-      
+      console.log(final)
         
      
           if (!final.message){
+          
              const products=final.cart.products;  
              let totalProducts=0;
      
