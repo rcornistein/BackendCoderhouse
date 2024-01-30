@@ -296,7 +296,7 @@ const deleteProductToCart= async(pid) =>{
              let totalProducts=0;
      
      
-          if(products.length>0){
+          if(products.length != undefined){
              for (const prod of  products) {
                totalProducts = totalProducts+prod.quantity;
               
