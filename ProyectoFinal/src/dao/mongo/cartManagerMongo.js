@@ -105,17 +105,14 @@ export class CartManagerMongo{
 
                 let product= cart.products.find(prod=> prod.pid._id.toString()===productId); 
 
-                if(!product){
+                if(!product && product.length>0){
 
                     return ({cart,messageWarning: "This product wasn't in the cart!"})
 
                 }
       
-                if(product.quantity != undefined){
+                if(!product.quantity){
 
-                    for (let i = 0; i < cart.lenght; i++) {
-                        str = str + i;
-                      }
                       
                     
                     for(let elem of cart.products){
